@@ -7,16 +7,16 @@ using Microsoft.Extensions.Options;
 
 namespace ModernSchool.DataAcces
 {
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<CustomDbContext>
     {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        public CustomDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<CustomDbContext>();
             var connectionString = @"server=youServerName,5433;Database=YourDatabaseName;User Id=sa; Password=yourPassword;";
             optionsBuilder.UseSqlServer(connectionString);
             Console.WriteLine(connectionString);
 
-            return new ApplicationDbContext(optionsBuilder.Options);
+            return new CustomDbContext(optionsBuilder.Options);
         }
 
     };
