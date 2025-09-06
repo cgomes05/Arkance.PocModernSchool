@@ -27,42 +27,62 @@ if (app.Environment.IsDevelopment())
         config.DocExpansion = "list";
     });
 }
-app.MapGet("/getAll", async (CustomDbContext Db) =>
-await Db.Students.ToListAsync()
-);
+var StudentItems = app.MapGroup("/students");
+    StudentItems.MapGet("/getAll", GetAllAsync);
+    StudentItems.MapGet("GetById", GetByIdAsync);
+    StudentItems.MapPost("register", RegisterAsync);
+    StudentItems.MapDelete("/delete", DeleteAsync);
+    StudentItems.MapPut("/Update", UpdateAsync);
 
-app.MapPost("/register", async (Student model, CustomDbContext Db) =>
-{
-    Db.Students.Add(model);
-await Db.SaveChangesAsync();
-return Results.Created($"/student/{model.Id}", model);
-});
-
-
-app.MapGet("/getbyId/{id}",async(int id, CustomDbContext Db) =>
-    await Db.Students.FindAsync(id)
-    is Student model ? Results.Ok(model) : Results.NotFound());
-
-app.MapPut("/put/{id}", async (int id,Student model, CustomDbContext Db) =>
-{
-    var student = await Db.Students.FindAsync(id);
-    if (student is null) return Results.NotFound();
-    model.Nom = student.Nom;
-    model.Prenom = student.Prenom;
-    await Db.SaveChangesAsync();
-    return Results.NoContent();
-});
-
-
-app.MapDelete("/delete/{id}", async (int id, CustomDbContext Db) =>
-{
-    if (await Db.Students.FindAsync(id) is Student model)
-    {
-        Db.Students.Remove(model);
-        await Db.SaveChangesAsync();
-        return Results.NoContent();
-    }
-    return Results.NotFound();
-
-});
 app.Run();
+
+ static async Task<IResult> GetAllAsync(CustomDbContext Db) {
+    return TypedResults.Ok(await Db.Students.ToListAsync());
+};
+
+static async Task<IResult> GetByIdAsync(int id,CustomDbContext Db)
+{
+    return await Db.Students.FindAsync(id)
+    is Student student ? TypedResults.Ok(student) : TypedResults.NotFound();
+}
+
+static async Task<IResult> RegisterAsync(Student model, CustomDbContext Db)
+{
+    if (model is not null)
+    {
+        Db.Students.Add(model);
+        await Db.SaveChangesAsync();
+        return TypedResults.Created();
+    }
+    ;
+    return TypedResults.BadRequest();
+}
+
+static async Task<IResult> DeleteAsync(int id, CustomDbContext db)
+{
+    if (await db.Students.FindAsync(id) is Student student)
+    {
+        db.Students.Remove(student);
+        await db.SaveChangesAsync();
+        return TypedResults.NoContent();
+    }
+    return TypedResults.BadRequest();
+
+}
+
+static async Task<IResult> UpdateAsync(int id, Student model, CustomDbContext db)
+{
+    var item = await db.Students.FindAsync(id);
+    if (item is null) return TypedResults.NotFound();
+    item.Nom = model.Nom;
+    item.Prenom = model.Prenom;
+    await db.SaveChangesAsync();
+    return TypedResults.NoContent();
+
+}
+{
+    
+}
+{
+    
+}
