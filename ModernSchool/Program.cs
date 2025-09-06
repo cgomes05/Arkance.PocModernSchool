@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using ModernSchool.DataAcces;
 using ModernSchool.Models;
+using ModernSchool.ViewsModels;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,20 +37,25 @@ var StudentItems = app.MapGroup("/students");
 app.Run();
 
  static async Task<IResult> GetAllAsync(CustomDbContext Db) {
-    return TypedResults.Ok(await Db.Students.ToListAsync());
+    return TypedResults.Ok(await Db.Students.Select(x => new StudentItemDTO(x)).ToArrayAsync());
 };
 
 static async Task<IResult> GetByIdAsync(int id,CustomDbContext Db)
 {
     return await Db.Students.FindAsync(id)
-    is Student student ? TypedResults.Ok(student) : TypedResults.NotFound();
+    is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
 }
 
-static async Task<IResult> RegisterAsync(Student model, CustomDbContext Db)
+static async Task<IResult> RegisterAsync(StudentItemDTO model, CustomDbContext Db)
 {
     if (model is not null)
     {
-        Db.Students.Add(model);
+        var studentItem = new Student
+        {
+            Prenom = model.Prenom,
+            Nom = model.Nom
+        };
+        Db.Students.Add(studentItem);
         await Db.SaveChangesAsync();
         return TypedResults.Created();
     }
@@ -70,12 +75,12 @@ static async Task<IResult> DeleteAsync(int id, CustomDbContext db)
 
 }
 
-static async Task<IResult> UpdateAsync(int id, Student model, CustomDbContext db)
+static async Task<IResult> UpdateAsync(int id, StudentItemDTO model, CustomDbContext db)
 {
-    var item = await db.Students.FindAsync(id);
-    if (item is null) return TypedResults.NotFound();
-    item.Nom = model.Nom;
-    item.Prenom = model.Prenom;
+    var student = await db.Students.FindAsync(id);
+    if (student is null) return TypedResults.NotFound();
+    student.Nom = model.Nom;
+    student.Prenom = model.Prenom;
     await db.SaveChangesAsync();
     return TypedResults.NoContent();
 

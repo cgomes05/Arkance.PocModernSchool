@@ -2,9 +2,9 @@
 {
     public class Student
     {
-        public required int Id { get; set; }
-        public required string Nom { get; set; }
-        public required string Prenom { get; set; }
-
+        public  int Id { get; set; }
+        public  string? Nom { get; set; }
+        public  string? Prenom { get; set; }
+        public string? Genre { get; set; }
     }
 }
