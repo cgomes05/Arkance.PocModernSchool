@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using ModernSchool.Models;
 
-namespace ModernSchool.DataAcces
-{
+namespace ModernSchool.DataAcces;
+
     public class CustomDbContext : DbContext
     {
         public CustomDbContext(DbContextOptions<CustomDbContext> options) : base(options)
@@ -14,6 +14,3 @@ namespace ModernSchool.DataAcces
         }
         public DbSet<Student> Students => Set<Student> ();
     }
-
-   
-}

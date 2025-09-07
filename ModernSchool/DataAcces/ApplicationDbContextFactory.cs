@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.Options;
 
-namespace ModernSchool.DataAcces
-{
+namespace ModernSchool.DataAcces;
     public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<CustomDbContext>
     {
         public CustomDbContext CreateDbContext(string[] args)
@@ -20,8 +19,3 @@ namespace ModernSchool.DataAcces
         }
 
     };
-
-    
-        
-    
-}

@@ -1,8 +1,7 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using ModernSchool.DataAcces;
-using ModernSchool.Models;
-using ModernSchool.ViewsModels;
+using ModernSchool;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,67 +26,10 @@ if (app.Environment.IsDevelopment())
         config.DocExpansion = "list";
     });
 }
-var StudentItems = app.MapGroup("/students");
-    StudentItems.MapGet("/getAll", GetAllAsync);
-    StudentItems.MapGet("GetById", GetByIdAsync);
-    StudentItems.MapPost("register", RegisterAsync);
-    StudentItems.MapDelete("/delete", DeleteAsync);
-    StudentItems.MapPut("/Update", UpdateAsync);
+
+// All EntryPoints 
+app.MapGroup("ModerSchool/v1")
+.MapModernSchoolApiV1()
+.WithTags();
 
 app.Run();
-
- static async Task<IResult> GetAllAsync(CustomDbContext Db) {
-    return TypedResults.Ok(await Db.Students.Select(x => new StudentItemDTO(x)).ToArrayAsync());
-};
-
-static async Task<IResult> GetByIdAsync(int id,CustomDbContext Db)
-{
-    return await Db.Students.FindAsync(id)
-    is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
-}
-
-static async Task<IResult> RegisterAsync(StudentItemDTO model, CustomDbContext Db)
-{
-    if (model is not null)
-    {
-        var studentItem = new Student
-        {
-            Prenom = model.Prenom,
-            Nom = model.Nom
-        };
-        Db.Students.Add(studentItem);
-        await Db.SaveChangesAsync();
-        return TypedResults.Created();
-    }
-    ;
-    return TypedResults.BadRequest();
-}
-
-static async Task<IResult> DeleteAsync(int id, CustomDbContext db)
-{
-    if (await db.Students.FindAsync(id) is Student student)
-    {
-        db.Students.Remove(student);
-        await db.SaveChangesAsync();
-        return TypedResults.NoContent();
-    }
-    return TypedResults.BadRequest();
-
-}
-
-static async Task<IResult> UpdateAsync(int id, StudentItemDTO model, CustomDbContext db)
-{
-    var student = await db.Students.FindAsync(id);
-    if (student is null) return TypedResults.NotFound();
-    student.Nom = model.Nom;
-    student.Prenom = model.Prenom;
-    await db.SaveChangesAsync();
-    return TypedResults.NoContent();
-
-}
-{
-    
-}
-{
-    
-}

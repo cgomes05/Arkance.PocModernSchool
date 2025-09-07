@@ -1,7 +1,6 @@
 using ModernSchool.Models;
 
-namespace ModernSchool.ViewsModels
-{
+namespace ModernSchool.ViewsModels;
     public class StudentItemDTO
     {
         public  int Id { get; set; }
@@ -13,4 +12,3 @@ namespace ModernSchool.ViewsModels
         (Id, Nom, Prenom) = (studentDTO.Id, studentDTO.Nom, studentDTO.Prenom);
 
     }
-}
