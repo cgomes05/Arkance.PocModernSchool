@@ -27,18 +27,18 @@ public static class EntrypointsV1
         return group;
     }
     //ALL ENtryPoints Methods
-    public static async Task<Ok<Student[]>> GetAllAsync(CustomDbContext Db) {
+    public static async Task<Ok<Student[]>> GetAllAsync(AppDbContext Db) {
         var student = await Db.Students.ToArrayAsync();
         return TypedResults.Ok(student);
     }
 
-    public static async Task<IResult> GetByIdAsync(int id, CustomDbContext Db)
+    public static async Task<IResult> GetByIdAsync(int id, AppDbContext Db)
     {
         return await Db.Students.FindAsync(id)
         is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
     }
 
-    static async Task<IResult> RegisterAsync(StudentItemDTO model, CustomDbContext Db)
+    static async Task<IResult> RegisterAsync(StudentItemDTO model, AppDbContext Db)
     {
         if (model is not null)
         {
@@ -55,7 +55,7 @@ public static class EntrypointsV1
         return TypedResults.BadRequest();
     }
 
-    static async Task<IResult> DeleteAsync(int id, CustomDbContext db)
+    static async Task<IResult> DeleteAsync(int id, AppDbContext db)
     {
         if (await db.Students.FindAsync(id) is Student student)
         {
@@ -67,7 +67,7 @@ public static class EntrypointsV1
 
     }
 
-    static async Task<IResult> UpdateAsync(int id, StudentItemDTO model, CustomDbContext db)
+    static async Task<IResult> UpdateAsync(int id, StudentItemDTO model, AppDbContext db)
     {
         var ExistingStudent = await db.Students.FindAsync(id);
         if (ExistingStudent is null) return TypedResults.NotFound();

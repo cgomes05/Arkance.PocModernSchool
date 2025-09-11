@@ -174,3 +174,5 @@
 /Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/bin/Debug/net9.0/NSwag.Generation.dll
 /Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/bin/Debug/net9.0/NSwag.Generation.AspNetCore.dll
 /Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/bin/Debug/net9.0/YamlDotNet.dll
+/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/bin/Debug/net9.0/Npgsql.dll
+/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

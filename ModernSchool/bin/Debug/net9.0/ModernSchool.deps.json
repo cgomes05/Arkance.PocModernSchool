@@ -13,7 +13,8 @@
           "Microsoft.EntityFrameworkCore.Design": "9.0.8",
           "Microsoft.EntityFrameworkCore.InMemory": "9.0.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.8",
-          "NSwag.AspNetCore": "14.5.0"
+          "NSwag.AspNetCore": "14.5.0",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0"
         },
         "runtime": {
           "ModernSchool.dll": {}
@@ -821,6 +822,31 @@
           }
         }
       },
+      "Npgsql/9.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.8",
+          "System.Text.Json": "9.0.8"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.0.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.8",
+          "Microsoft.EntityFrameworkCore.Relational": "9.0.8",
+          "Npgsql": "9.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.0.0"
+          }
+        }
+      },
       "NSwag.Annotations/14.5.0": {
         "runtime": {
           "lib/netstandard2.0/NSwag.Annotations.dll": {
@@ -1523,6 +1549,20 @@
       "sha512": "sha512-fKBEOYH+bFGWslIgneugnoMiQs/NI4MHS15SX89iz5h1U3P/C8XQFnYGGIxkcs3cN7dihlpk75wyk1JvuNSWug==",
       "path": "njsonschema.yaml/11.4.0",
       "hashPath": "njsonschema.yaml.11.4.0.nupkg.sha512"
+    },
+    "Npgsql/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zu1nCRt0gWP/GR0reYgg0Bl5o8qyNV7mVAgzAbVLRiAd1CYXcf/9nrubPH0mt93u8iGTKmYqWaLVECEAcE6IfQ==",
+      "path": "npgsql/9.0.0",
+      "hashPath": "npgsql.9.0.0.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ObngKFRLMBAeMqQzK7SC0Q6WZtWw0imPmEkVPo12yLVF3fioz2TN+w0mhNMJ5cVd/sLB2u+jei0bmA9sDMtkMw==",
+      "path": "npgsql.entityframeworkcore.postgresql/9.0.0",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512"
     },
     "NSwag.Annotations/14.5.0": {
       "type": "package",

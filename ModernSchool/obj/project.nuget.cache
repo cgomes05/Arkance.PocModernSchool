@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "x1dC7uz98gI=",
+  "dgSpecHash": "RP+LvgBAYQU=",
   "success": true,
   "projectFilePath": "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/ModernSchool.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,8 @@
     "/Users/coderly/.nuget/packages/njsonschema.annotations/11.4.0/njsonschema.annotations.11.4.0.nupkg.sha512",
     "/Users/coderly/.nuget/packages/njsonschema.newtonsoftjson/11.4.0/njsonschema.newtonsoftjson.11.4.0.nupkg.sha512",
     "/Users/coderly/.nuget/packages/njsonschema.yaml/11.4.0/njsonschema.yaml.11.4.0.nupkg.sha512",
+    "/Users/coderly/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
+    "/Users/coderly/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.0/npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512",
     "/Users/coderly/.nuget/packages/nswag.annotations/14.5.0/nswag.annotations.14.5.0.nupkg.sha512",
     "/Users/coderly/.nuget/packages/nswag.aspnetcore/14.5.0/nswag.aspnetcore.14.5.0.nupkg.sha512",
     "/Users/coderly/.nuget/packages/nswag.core/14.5.0/nswag.core.14.5.0.nupkg.sha512",

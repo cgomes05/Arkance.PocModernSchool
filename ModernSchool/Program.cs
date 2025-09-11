@@ -5,7 +5,8 @@ using ModernSchool;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<CustomDbContext>(opt => opt.UseInMemoryDatabase("StudentsList"));
+//builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("StudentsList"));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
