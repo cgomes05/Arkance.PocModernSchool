@@ -12,6 +12,7 @@ public class Student
     public string? Prenom { get; set; }
     [Required, StringLength(1)]
     public string? Genre { get; set; }
+    
     public int ClassId { get; set; }
     public Classe Classe { get; set; }
 
