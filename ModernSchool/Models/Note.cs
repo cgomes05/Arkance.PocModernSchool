@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModernSchool.Models;
-
+[Table("Notes")]
 public class Note
 {
     [Key]
@@ -11,7 +12,7 @@ public class Note
     public decimal Valeur { get; set; }
 
     public int StudentId { get; set; }
-    public Student? Student { get; set; }
+    public Student Student { get; set; }
 
     public int MatiereId { get; set; }
     public Matiere? Matiere { get; set; }

@@ -32,7 +32,7 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
         };
         try
         {
-            var result = _context.StudentNote.Add(newNote);
+            var result = _context.Notes.Add(newNote);
             await _context.SaveChangesAsync();
         }
         catch (Exception e)
@@ -46,14 +46,14 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
     // GetAll Note
     public async Task<Ok<Note[]>> GetAllNotesAsync()
     {
-        var newNote = await _context.StudentNote.ToArrayAsync();
+        var newNote = await _context.Notes.ToArrayAsync();
         return TypedResults.Ok(newNote);
 
     }
     //Update Note 
     public async Task<IResult> UpdateAsync(int id, Note noteModel)
     {
-        var existingNote = await _context.StudentNote.FindAsync(id);
+        var existingNote = await _context.Notes.FindAsync(id);
         if (existingNote is null) return TypedResults.NotFound();
         existingNote.Valeur = noteModel.Valeur;
         existingNote.StudentId = noteModel.StudentId;
@@ -64,7 +64,7 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
 
     public async Task<IResult> DeleteNoteAsync(int id)
     {
-        await _context.StudentNote.ExecuteDeleteAsync();
+        await _context.Notes.ExecuteDeleteAsync();
         await _context.SaveChangesAsync();
         return TypedResults.Ok();
 

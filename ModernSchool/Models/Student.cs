@@ -13,8 +13,9 @@ public class Student
     [Required, StringLength(1)]
     public string? Genre { get; set; }
 
-    public int ClasseId { get; set; }
-    public Classe Classe { get; set; }
+    public int? ClasseId { get; set; }
+    public Classe? Classe { get; set; }
 
     public ICollection<Note> Notes { get; set; }
+
 }

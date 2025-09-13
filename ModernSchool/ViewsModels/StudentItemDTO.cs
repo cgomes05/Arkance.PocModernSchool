@@ -13,13 +13,12 @@ namespace ModernSchool.ViewsModels;
     [Required, StringLength(1)]
     public string? Genre { get; set; }
     
-    public int ClassId { get; set; }
-    public Classe Classe { get; set; }
+
 
     //public ICollection<Note> Notes {get; set;}
         public StudentItemDTO() { }
 
         public StudentItemDTO(Student studentDTO) =>
-        (Id, Nom, Prenom,Genre, ClassId) = (studentDTO.Id, studentDTO.Nom, studentDTO.Prenom, studentDTO.Genre, studentDTO.ClassId);
+        (Id, Nom, Prenom,Genre) = (studentDTO.Id, studentDTO.Nom, studentDTO.Prenom, studentDTO.Genre);
 
     }

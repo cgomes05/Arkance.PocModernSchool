@@ -16,13 +16,12 @@ public class AppDbContext : DbContext
 
     }
 
-
+    public DbSet<Note> Notes => Set<Note>();
     public DbSet<Student> Students => Set<Student>();
-    public DbSet<Note> StudentNote => Set<Note>();
-    public DbSet<Professeur> Prof => Set<Professeur>();
-    public DbSet<Matiere> Matiere => Set<Matiere>();
-    public DbSet<Enseigne> Enseigne => Set<Enseigne>();
-    public DbSet<Classe> Classe => Set<Classe>();
+    public DbSet<Professeur> Profs => Set<Professeur>();
+    public DbSet<Matiere> Matieres => Set<Matiere>();
+    public DbSet<Enseigne> Enseignes => Set<Enseigne>();
+    public DbSet<Classe> Classes => Set<Classe>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,11 +49,6 @@ public class AppDbContext : DbContext
         .WithMany(p => p.ClassesPrincipales)
         .HasForeignKey(c => c.ProfPrincipalId)
         .OnDelete(DeleteBehavior.Restrict); // Empeche la suppression en cascade
-
-        // Contrainte sur la valeur de note 
-        modelBuilder.Entity<Note>()
-        .ToTable("CK_Note_Valeur", "[Valeur] >= 0 AND [Valeur] <= 20");
-
         }
     }
     

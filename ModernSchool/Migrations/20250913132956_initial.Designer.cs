@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ModernSchool.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250912095233_correctionStudentTable")]
-    partial class correctionStudentTable
+    [Migration("20250913132956_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace ModernSchool.Migrations
 
             modelBuilder.Entity("ModernSchool.Models.Classe", b =>
                 {
-                    b.Property<int>("ClassId")
+                    b.Property<int>("ClasseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClassId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClasseId"));
 
                     b.Property<DateTime>("DatCreation")
                         .HasColumnType("timestamp with time zone");
@@ -47,11 +47,11 @@ namespace ModernSchool.Migrations
                     b.Property<int>("ProfPrincipalId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ClassId");
+                    b.HasKey("ClasseId");
 
                     b.HasIndex("ProfPrincipalId");
 
-                    b.ToTable("Classe");
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("ModernSchool.Models.Enseigne", b =>
@@ -66,7 +66,7 @@ namespace ModernSchool.Migrations
 
                     b.HasIndex("MatiereId");
 
-                    b.ToTable("Enseigne");
+                    b.ToTable("Enseignes");
                 });
 
             modelBuilder.Entity("ModernSchool.Models.Matiere", b =>
@@ -84,7 +84,7 @@ namespace ModernSchool.Migrations
 
                     b.HasKey("MatiereId");
 
-                    b.ToTable("Matiere");
+                    b.ToTable("Matieres");
                 });
 
             modelBuilder.Entity("ModernSchool.Models.Note", b =>
@@ -113,7 +113,7 @@ namespace ModernSchool.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CK_Note_Valeur", "[Valeur] >= 0 AND [Valeur] <= 20");
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("ModernSchool.Models.Professeur", b =>
@@ -140,7 +140,7 @@ namespace ModernSchool.Migrations
 
                     b.HasKey("ProfId");
 
-                    b.ToTable("Prof");
+                    b.ToTable("Profs");
                 });
 
             modelBuilder.Entity("ModernSchool.Models.Student", b =>
@@ -151,10 +151,7 @@ namespace ModernSchool.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ClasseClassId")
+                    b.Property<int?>("ClasseId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Genre")
@@ -174,7 +171,7 @@ namespace ModernSchool.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClasseClassId");
+                    b.HasIndex("ClasseId");
 
                     b.ToTable("Students");
                 });
@@ -232,9 +229,7 @@ namespace ModernSchool.Migrations
                 {
                     b.HasOne("ModernSchool.Models.Classe", "Classe")
                         .WithMany("Students")
-                        .HasForeignKey("ClasseClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClasseId");
 
                     b.Navigation("Classe");
                 });

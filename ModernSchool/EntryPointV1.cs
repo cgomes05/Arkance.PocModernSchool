@@ -3,8 +3,6 @@ using ModernSchool.DataAcces;
 using ModernSchool.ViewsModels;
 using NSwag;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 namespace ModernSchool;
 
 public static class EntrypointsV1
@@ -53,7 +51,7 @@ public static class EntrypointsV1
         is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
     }
 
-    static async Task<IResult> RegisterAsync([FromBody] StudentItemDTO model, AppDbContext Db)
+    static async Task<IResult> RegisterAsync(StudentItemDTO model, IStudentService Db)
     {
         if (model is not null)
         {
@@ -62,11 +60,8 @@ public static class EntrypointsV1
                 Prenom = model.Prenom,
                 Nom = model.Nom,
                 Genre = model.Genre,
-                ClassId =model.ClassId
-                
             };
-            Db.Students.Add(studentItem);
-            await Db.SaveChangesAsync();
+           await Db.AddStudentAsync(studentItem);
             return TypedResults.Created();
         }
         ;
