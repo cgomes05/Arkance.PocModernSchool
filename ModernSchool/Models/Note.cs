@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModernSchool.Models;
+
 [Table("Notes")]
 public class Note
 {
@@ -16,6 +17,6 @@ public class Note
 
     public int MatiereId { get; set; }
     public Matiere? Matiere { get; set; }
-    public DateTime DateNote { get; set; } = DateTime.Now;
+    public DateTime DateAddNote { get; set; } = DateTime.UtcNow;
 
 }

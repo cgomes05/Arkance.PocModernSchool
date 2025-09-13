@@ -10,6 +10,7 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configu
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IStudentService, StudentService>();
+builder.Services.AddScoped<INoteService, Noteservice>();
 builder.Services.AddOpenApiDocument(config =>
 {
     config.DocumentName = "ModernSchoolAPI";

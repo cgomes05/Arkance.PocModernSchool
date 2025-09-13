@@ -100,17 +100,27 @@ public static class EntrypointsV1
     {
         throw new NotImplementedException("En cour d'implementation");
     }
-    static async Task<Ok<Note[]>> AddNoteAsync()
+    static async Task<IResult> AddNoteAsync(int studentId, decimal NoteValeur, int matiereId, INoteService noteService)
     {
-        throw new NotImplementedException();
+        await noteService.AddNoteAsync(studentId, NoteValeur, matiereId);
+        var noteModel = new Note
+        {
+            StudentId = studentId,
+            Valeur = NoteValeur,
+            MatiereId = matiereId
+
+        };
+        return TypedResults.Ok(noteModel);
     }
 
-    static async Task UpdateNoteAsync()
+    static async Task<IResult> UpdateNoteAsync(int idNote, decimal valeurNote, INoteService noteService)
     {
-        throw new NotImplementedException();
+        await noteService.UpdateAsync(idNote, valeurNote);
+        return TypedResults.Ok();
     }
-    static async Task DeleteNoteAsync()
+    static async Task<IResult> DeleteNoteAsync(int idNote, INoteService noteService)
     {
-        throw new NotImplementedException();
+        var result = await noteService.DeleteNoteAsync(idNote);
+        return TypedResults.Ok(result);
     }
      }

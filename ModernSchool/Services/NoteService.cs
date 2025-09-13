@@ -10,7 +10,7 @@ public interface INoteService
 {
     Task AddNoteAsync(int studentId, decimal NoteValeurNote, int matiereId);
     Task<Ok<Note[]>> GetAllNotesAsync();
-    Task<IResult> UpdateAsync(int id, Note noteModel);
+    Task<IResult> UpdateAsync(int id, decimal valeurNote);
     Task<IResult> DeleteNoteAsync(int id);
     
 }
@@ -28,7 +28,7 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
             StudentId = studentId,
             Valeur = NoteValeurNote,
             MatiereId = matiereId,
-            DateNote = DateTime.Now
+            //DateNote = DateTime.Now
         };
         try
         {
@@ -51,22 +51,29 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
 
     }
     //Update Note 
-    public async Task<IResult> UpdateAsync(int id, Note noteModel)
+    public async Task<IResult> UpdateAsync(int id, decimal valeurNote)
     {
         var existingNote = await _context.Notes.FindAsync(id);
         if (existingNote is null) return TypedResults.NotFound();
-        existingNote.Valeur = noteModel.Valeur;
-        existingNote.StudentId = noteModel.StudentId;
-        existingNote.MatiereId = noteModel.MatiereId;
+        existingNote.Valeur = valeurNote;
+        //existingNote.StudentId = noteModel.StudentId;
+        //existingNote.MatiereId = noteModel.MatiereId;
         await _context.SaveChangesAsync();
-        return TypedResults.Created($"/student/v1/{existingNote.NoteId}", noteModel);
+        return TypedResults.Created($"/student/v1/{existingNote.NoteId}", existingNote);
     }
 
     public async Task<IResult> DeleteNoteAsync(int id)
     {
-        await _context.Notes.ExecuteDeleteAsync();
-        await _context.SaveChangesAsync();
-        return TypedResults.Ok();
+
+        var existingNote = await _context.Notes.FindAsync(id);
+        if (existingNote != null)
+        {
+            await _context.Notes.ExecuteDeleteAsync();
+            await _context.SaveChangesAsync();
+            return TypedResults.Ok();
+        }
+        return TypedResults.NotFound("This Id note is not exist !");
+        
 
     }
     
