@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddOpenApiDocument(config =>
 {
     config.DocumentName = "ModernSchoolAPI";
@@ -29,7 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // All EntryPoints 
-app.MapGroup("ModerSchool/v1")
+app.MapGroup("Api/v1")
 .MapModernSchoolApiV1()
 .WithTags();
 

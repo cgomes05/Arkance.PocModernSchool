@@ -8,7 +8,7 @@ namespace ModernSchool.Models;
 public class Classe
 {
     [Key]
-    public int ClassId { get; set; }
+    public int ClasseId { get; set; }
     [Required]
     [StringLength(25)]
     public string? NomNiveau { get; set; }
@@ -16,6 +16,6 @@ public class Classe
     public Professeur? ProfPrincipal { get; set; }
     public DateTime DatCreation { get; set; } = DateTime.Now;
     public DateTime DteUpdate { get; set; } = DateTime.Now;
-    public ICollection<Student>? Students { get; set; }
+    public ICollection<Student> Students { get; set; }
 
 }

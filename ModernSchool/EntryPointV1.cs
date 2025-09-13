@@ -4,15 +4,18 @@ using ModernSchool.ViewsModels;
 using NSwag;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 namespace ModernSchool;
+
 public static class EntrypointsV1
 {
-    public static RouteGroupBuilder MapModernSchoolApiV1(this RouteGroupBuilder group) {
+    public static RouteGroupBuilder MapModernSchoolApiV1(this RouteGroupBuilder group)
+    {
 
-
-        group.MapGet("/getAll", GetAllAsync);
-        group.MapGet("GetById", GetByIdAsync);
-        group.MapPost("register", RegisterAsync).AddEndpointFilter(async (efiContext, next)=>
+    //Handler Students
+        group.MapGet("/GetAllStudents", GetAllAsync);
+        group.MapGet("GetStudentByClasse", GetByClass);
+        group.MapPost("AddStudent", RegisterAsync).AddEndpointFilter(async (efiContext, next) =>
         {
             var param = efiContext.GetArgument<StudentItemDTO>(0);
             var validationErrors = Utilities.IsValid(param);
@@ -22,30 +25,45 @@ public static class EntrypointsV1
             }
             return await next(efiContext);
         });
-        group.MapDelete("/delete", DeleteAsync);
-        group.MapPut("/Update", UpdateAsync);
+        group.MapDelete("/DeleteStudent", DeleteAsync);
+        group.MapPut("/UpdateStudent", UpdateAsync);
+        group.MapPost("GetStudentNote", GetStudentNoteAsync);
+
+    //Lister les professeur par matière
+        group.MapGet("/GetProfByMatiere", GetProfByMatiereAsync);
+
+        //Handler Note
+        group.MapPost("/AddNote", AddNoteAsync);
+        group.MapPut("/UpdateNote", UpdateNoteAsync);
+        group.MapDelete("/DeleteNote", DeleteNoteAsync);
+
+
         return group;
     }
     //ALL ENtryPoints Methods
-    public static async Task<Ok<Student[]>> GetAllAsync(AppDbContext Db) {
-        var student = await Db.Students.ToArrayAsync();
-        return TypedResults.Ok(student);
+    public static async Task<Ok<Student[]>> GetAllAsync(IStudentService studentService)
+    {
+        return await studentService.GetAllAsync();
     }
 
-    public static async Task<IResult> GetByIdAsync(int id, AppDbContext Db)
+    //Get Student by class
+    public static async Task<IResult> GetByClass(int id, AppDbContext Db)
     {
         return await Db.Students.FindAsync(id)
         is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
     }
 
-    static async Task<IResult> RegisterAsync(StudentItemDTO model, AppDbContext Db)
+    static async Task<IResult> RegisterAsync([FromBody] StudentItemDTO model, AppDbContext Db)
     {
         if (model is not null)
         {
             var studentItem = new Student
             {
                 Prenom = model.Prenom,
-                Nom = model.Nom
+                Nom = model.Nom,
+                Genre = model.Genre,
+                ClassId =model.ClassId
+                
             };
             Db.Students.Add(studentItem);
             await Db.SaveChangesAsync();
@@ -76,4 +94,28 @@ public static class EntrypointsV1
         await db.SaveChangesAsync();
         return TypedResults.Created($"/student/v1/{ExistingStudent.Id}", ExistingStudent);
 
-    } }
+    }
+    //Lister les professseur par Matiere
+    static async Task<Ok<Professeur[]>> GetProfByMatiereAsync()
+    {
+        throw new NotImplementedException("En cours d'implémentation");
+    }
+
+    static async Task<Ok<Note[]>> GetStudentNoteAsync()
+    {
+        throw new NotImplementedException("En cour d'implementation");
+    }
+    static async Task<Ok<Note[]>> AddNoteAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    static async Task UpdateNoteAsync()
+    {
+        throw new NotImplementedException();
+    }
+    static async Task DeleteNoteAsync()
+    {
+        throw new NotImplementedException();
+    }
+     }

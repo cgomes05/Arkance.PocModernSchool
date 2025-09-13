@@ -32,23 +32,23 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Enseigne>()
         .HasKey(e => new { e.ProfId, e.MatiereId });
 
-        // configuration des rel    tions Many-to-Many
+        // configuration des relations Many-to-Many
         modelBuilder.Entity<Enseigne>()
         .HasOne(e => e.Professeur)
-        .WithMany(e => e.Enseignes)
+        .WithMany(p => p.Enseignes)
         .HasForeignKey(e => e.ProfId);
 
 
         modelBuilder.Entity<Enseigne>()
         .HasOne(e => e.Matiere)
-        .WithMany(e => e.Enseignes)
+        .WithMany(p => p.Enseignes)
         .HasForeignKey(e => e.MatiereId);
 
         // configuration de la relation prof principal 
         modelBuilder.Entity<Classe>()
-        .HasOne(e => e.ProfPrincipal)
-        .WithMany(e => e.ClassesPrincipales)
-        .HasForeignKey(e => e.ProfPrincipalId)
+        .HasOne(c => c.ProfPrincipal)
+        .WithMany(p => p.ClassesPrincipales)
+        .HasForeignKey(c => c.ProfPrincipalId)
         .OnDelete(DeleteBehavior.Restrict); // Empeche la suppression en cascade
 
         // Contrainte sur la valeur de note 
