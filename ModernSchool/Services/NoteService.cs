@@ -68,7 +68,8 @@ public sealed class Noteservice(AppDbContext appDbContext) : INoteService
         var existingNote = await _context.Notes.FindAsync(id);
         if (existingNote != null)
         {
-            await _context.Notes.ExecuteDeleteAsync();
+            await _context.Notes.Where(x => x.NoteId == id)
+            .ExecuteDeleteAsync();
             await _context.SaveChangesAsync();
             return TypedResults.Ok();
         }

@@ -44,11 +44,12 @@ public static class EntrypointsV1
         return await studentService.GetAllAsync();
     }
 
-    //Get Student by class
-    public static async Task<IResult> GetByClass(int id, AppDbContext Db)
+    //Lister les eleves par classe
+    public static async Task<IResult> GetByClass(int id, IStudentService studentService)
     {
-        return await Db.Students.FindAsync(id)
-        is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
+        //return await Db.Students.FindAsync(id)
+        //is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
+        return TypedResults.BadRequest();
     }
 
     static async Task<IResult> RegisterAsync(StudentItemDTO model, IStudentService Db)
@@ -68,26 +69,17 @@ public static class EntrypointsV1
         return TypedResults.BadRequest();
     }
 
-    static async Task<IResult> DeleteAsync(int id, AppDbContext db)
+    static async Task<IResult> DeleteAsync(int id, IStudentService studentService)
     {
-        if (await db.Students.FindAsync(id) is Student student)
-        {
-            db.Students.Remove(student);
-            await db.SaveChangesAsync();
-            return TypedResults.NoContent();
-        }
-        return TypedResults.BadRequest();
+        await studentService.DeleteAsync(id);
+        return TypedResults.Ok($"Utilisateur avec Id {id} a bien été supprimé !");
 
     }
 
-    static async Task<IResult> UpdateAsync(int id, StudentItemDTO model, AppDbContext db)
+    static async Task<IResult> UpdateAsync(StudentItemDTO model, IStudentService studentService)
     {
-        var ExistingStudent = await db.Students.FindAsync(id);
-        if (ExistingStudent is null) return TypedResults.NotFound();
-        ExistingStudent.Nom = model.Nom;
-        ExistingStudent.Prenom = model.Prenom;
-        await db.SaveChangesAsync();
-        return TypedResults.Created($"/student/v1/{ExistingStudent.Id}", ExistingStudent);
+         await studentService.UpdateAsync(model);
+        return TypedResults.Created();
 
     }
     //Lister les professseur par Matiere
@@ -96,9 +88,11 @@ public static class EntrypointsV1
         throw new NotImplementedException("En cours d'implémentation");
     }
 
-    static async Task<Ok<Note[]>> GetStudentNoteAsync()
+    static async Task<IResult> GetStudentNoteAsync(int id, IStudentService studentService)
     {
-        throw new NotImplementedException("En cour d'implementation");
+        var getResult = await studentService.GetStudentGradesAsync(id);
+        return TypedResults.Ok(getResult);
+        
     }
     static async Task<IResult> AddNoteAsync(int studentId, decimal NoteValeur, int matiereId, INoteService noteService)
     {
