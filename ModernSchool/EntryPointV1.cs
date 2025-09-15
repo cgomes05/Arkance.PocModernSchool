@@ -96,6 +96,14 @@ public static class EntrypointsV1
     }
     static async Task<IResult> AddNoteAsync(int studentId, decimal NoteValeur, int matiereId, INoteService noteService)
     {
+        // Validation rapide
+    if (NoteValeur < 0 || NoteValeur > 20)
+        return Results.ValidationProblem(
+            new Dictionary<string, string[]>
+            {
+                { "Valeur", new[] { "La note doit être entre 0 et 20" } }
+            });
+            
         await noteService.AddNoteAsync(studentId, NoteValeur, matiereId);
         var noteModel = new Note
         {

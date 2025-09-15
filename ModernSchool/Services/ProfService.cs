@@ -13,20 +13,25 @@ public sealed class ProfService(AppDbContext appDbContext) : IProfService
     private readonly AppDbContext _context = appDbContext;
     public async Task<IResult> GetProfByMatiereAsync()
     {
-        var result = await _context.Enseignes
-        .Include(e => e.Professeur)
-        .Include(e => e.Matiere)
-        .Select(e => new
+        var result = await _context.Matieres
+        .Select(m => new
         {
-            Profid = e.Professeur.ProfId,
-            Nom = e.Professeur.Nom,
-            Prenom = e.Professeur.Prenom,
-            NomDeLaMatiere = e.Matiere.Nom
+            Matiere = m.Nom,
+            Professeurs = m.Enseignes
+                .Select(e => e.Professeur)
+                .OrderBy(p => p.Nom)
+                .Select(p => new 
+                { 
+                    p.ProfId, 
+                    p.Nom, 
+                    p.Prenom 
+                })
+                .ToList()
         })
-        .OrderBy(x => x.NomDeLaMatiere)
-        .ThenBy(x => x.Nom)
+        .OrderBy(x => x.Matiere)
         .ToListAsync();
-        return TypedResults.Ok(result);
+
+    return TypedResults.Ok(result);
 
     }
 }

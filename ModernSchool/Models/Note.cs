@@ -9,7 +9,7 @@ public class Note
     [Key]
     public int NoteId { get; set; }
 
-    [Required, Range(0, 20)]
+    [Required, Range(0, 20,ErrorMessage ="La note doit être entre 0 et 20")]
     public decimal Valeur { get; set; }
 
     public int StudentId { get; set; }
