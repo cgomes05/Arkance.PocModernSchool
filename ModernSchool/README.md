@@ -1,21 +1,17 @@
-Voici une version structurée et professionnelle du **README.md** pour ton repository Arkance :
-
----
-
 # Arkance Project
 
-## 🚀 Technologies utilisées
+ 🚀 Technologies utilisées
 
-* **.NET 9** (SDK version 13)
-* **API Minimal**
-* **Entity Framework Core (EF Core)** comme ORM
-* **Base de données PostgreSQL** hébergée sur **Supabase**
+* NET 9 (SDK version 13)
+* API Minimal
+* Entity Framework Core (EF Core) comme ORM
+* Base de données PostgreSQL hébergée sur Supabase
 
 ---
 
-## ⚙️ Installation et lancement
+ ⚙️ Installation et lancement
 
-### 1. Cloner le repository
+ 1. Cloner le repository
 
 ```bash
 git clone https://github.com/<ton-repository>/arkance.git
@@ -34,14 +30,14 @@ dotnet restore
 
 Deux options :
 
-* **Via le terminal (Visual Studio Code, PowerShell, etc.)**
+Via le terminal (Visual Studio Code, PowerShell, etc.)**
 
 ```bash
 dotnet run
 ```
 
-* **Via Visual Studio**
-  Exécuter en **mode Debug** directement depuis l’IDE.
+  Via Visual Studio
+  Exécuter en mode Debug directement depuis l’IDE.
 
 ---
 
@@ -54,8 +50,8 @@ Une fois l’application lancée, accéder à **Swagger** pour tester les endpoi
 
 ## 🗄️ Base de données
 
-* **SGBD** : PostgreSQL (hébergé sur [Supabase](https://supabase.com/))
-* **ORM** : Entity Framework Core
+* SGBD : PostgreSQL (hébergé sur [Supabase](https://supabase.com/))
+* ORM : Entity Framework Core
 
 ---
 
@@ -63,5 +59,3 @@ Une fois l’application lancée, accéder à **Swagger** pour tester les endpoi
 
 * Les tests peuvent être effectués directement depuis Swagger.
 * Vérifier que la connexion à la base de données Supabase est correctement configurée dans le fichier `appsettings.json`.
-
----
