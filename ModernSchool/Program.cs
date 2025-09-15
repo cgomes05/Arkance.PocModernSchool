@@ -11,6 +11,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<INoteService, Noteservice>();
+builder.Services.AddTransient<IProfService, ProfService>();
 builder.Services.AddOpenApiDocument(config =>
 {
     config.DocumentName = "ModernSchoolAPI";

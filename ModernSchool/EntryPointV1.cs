@@ -12,7 +12,7 @@ public static class EntrypointsV1
 
     //Handler Students
         group.MapGet("/GetAllStudents", GetAllAsync);
-        group.MapGet("GetStudentByClasse", GetByClass);
+        group.MapGet("GetStudentByClasse", GetStudentByClasse);
         group.MapPost("AddStudent", RegisterAsync).AddEndpointFilter(async (efiContext, next) =>
         {
             var param = efiContext.GetArgument<StudentItemDTO>(0);
@@ -45,11 +45,10 @@ public static class EntrypointsV1
     }
 
     //Lister les eleves par classe
-    public static async Task<IResult> GetByClass(int id, IStudentService studentService)
+    public static async Task<IResult> GetStudentByClasse(IStudentService studentService)
     {
-        //return await Db.Students.FindAsync(id)
-        //is Student student ? TypedResults.Ok(new StudentItemDTO(student)) : TypedResults.NotFound();
-        return TypedResults.BadRequest();
+
+        return await studentService.GetStudentByClasseAsync();
     }
 
     static async Task<IResult> RegisterAsync(StudentItemDTO model, IStudentService Db)
@@ -83,9 +82,10 @@ public static class EntrypointsV1
 
     }
     //Lister les professseur par Matiere
-    static async Task<Ok<Professeur[]>> GetProfByMatiereAsync()
+    static async Task<IResult> GetProfByMatiereAsync(IProfService profService)
     {
-        throw new NotImplementedException("En cours d'implémentation");
+        return await profService.GetProfByMatiereAsync();
+
     }
 
     static async Task<IResult> GetStudentNoteAsync(int id, IStudentService studentService)

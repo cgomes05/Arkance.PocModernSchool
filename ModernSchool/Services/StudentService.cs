@@ -13,7 +13,7 @@ public interface IStudentService
     Task<IResult> DeleteAsync(int id);
     Task<IResult> UpdateAsync(StudentItemDTO model);
     Task<IResult> GetStudentGradesAsync(int id);
-    Task<IResult> GetStudentByClasse();
+    Task<IResult> GetStudentByClasseAsync();
 }
 
 public sealed class StudentService(AppDbContext appDbContext) : IStudentService
@@ -65,13 +65,13 @@ public sealed class StudentService(AppDbContext appDbContext) : IStudentService
 
     public async Task<IResult> GetStudentGradesAsync(int id)
     {
-     if (id <= 0) 
-        return TypedResults.BadRequest("The Id is not valid !");
+        if (id <= 0)
+            return TypedResults.BadRequest("The Id is not valid !");
 
-    // Vérifier si l'étudiant existe (plus efficace que FindAsync + Where)
-    var studentExists = await _context.Students.AnyAsync(s => s.Id == id);
-    if (!studentExists) 
-        return TypedResults.NotFound($"Élève avec l'ID {id} non trouvé.");
+        // Vérifier si l'étudiant existe (plus efficace que FindAsync + Where)
+        var studentExists = await _context.Students.AnyAsync(s => s.Id == id);
+        if (!studentExists)
+            return TypedResults.NotFound($"Élève avec l'ID {id} non trouvé.");
 
         var studentWithHerGrades = _context.Students
                                     .Where(n => n.Id == id)
@@ -89,13 +89,27 @@ public sealed class StudentService(AppDbContext appDbContext) : IStudentService
 
                                     })
                                     .FirstOrDefault();
-        if (studentWithHerGrades == null)
-            return TypedResults.NotFound($"Elève avec {id} non trouvé !");
-        return TypedResults.Ok(studentWithHerGrades);
+       
+        return studentWithHerGrades == null
+        ? TypedResults.NotFound($"Elève {id} non trouvé !") 
+        : TypedResults.Ok(studentWithHerGrades);
     }
 
-    public async Task<IResult> GetStudentByClasse()
+    public async Task<IResult> GetStudentByClasseAsync()
     {
-        throw new NotImplementedException();
+        var studentByClass = await _context.Classes
+                        .Include(x => x.Students)
+                        .OrderBy(x => x.NomNiveau)
+                        .Select(x => new
+                        {
+                            Classe = x.NomNiveau,
+                            Eleve = x.Students
+                                .OrderBy(e => e.Nom)
+                                .Select(e => new { e.Id, e.Nom, e.Prenom })
+                                .ToList()
+                        })
+                        .ToListAsync();
+        return TypedResults.Ok(studentByClass);
+
     }
 }
