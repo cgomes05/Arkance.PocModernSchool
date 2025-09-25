@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/ModernSchool.csproj": {}
+    "D:\\Entrepreneur\\AI_Teacher_Assistant_Api\\ModernSchool\\ModernSchool.csproj": {}
   },
   "projects": {
-    "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/ModernSchool.csproj": {
+    "D:\\Entrepreneur\\AI_Teacher_Assistant_Api\\ModernSchool\\ModernSchool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/ModernSchool.csproj",
+        "projectUniqueName": "D:\\Entrepreneur\\AI_Teacher_Assistant_Api\\ModernSchool\\ModernSchool.csproj",
         "projectName": "ModernSchool",
-        "projectPath": "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/ModernSchool.csproj",
-        "packagesPath": "/Users/coderly/.nuget/packages/",
-        "outputPath": "/Users/coderly/Documents/Openclassrooms/Arkance.PocModernSchool/ModernSchool/obj/",
+        "projectPath": "D:\\Entrepreneur\\AI_Teacher_Assistant_Api\\ModernSchool\\ModernSchool.csproj",
+        "packagesPath": "C:\\Users\\cgome\\.nuget\\packages\\",
+        "outputPath": "D:\\Entrepreneur\\AI_Teacher_Assistant_Api\\ModernSchool\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/coderly/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\cgome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -94,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100-rc.1.25451.107/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
